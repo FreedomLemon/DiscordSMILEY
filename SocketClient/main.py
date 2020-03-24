@@ -11,13 +11,18 @@ class Client:
         self.heartbeat = None
         self.socket = None
         self.sessionID = None
+        self.seq = None
     
-    async def onClose(self):
+    async def resume(self):
         if self.socket == None:
             return
 
         if self.socket.close_code == 1001:
-            await self.resume()
+            await self.send(json.dumps({
+                "token": token,
+                "session_id": self.sessionID,
+                "seq": self.seq
+            }))
 
     async def connect(self):
         self.socket = await websockets.connect("wss://gateway.discord.gg/?encoding=json&v=6")
@@ -62,6 +67,8 @@ class Client:
             await self.identify()
 
         while True:
-            print( Fore.CYAN + await self.socket.recv() + "\n")
+            _data = json.loads(await self.socket.recv())
+            self.seq = _data['s']
+            print( Fore.CYAN + _data + "\n")
 
 asyncio.run(Client(token).messages())
