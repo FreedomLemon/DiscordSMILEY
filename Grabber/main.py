@@ -35,5 +35,4 @@ input(" Press enter to close" )
 
 
 
-
-// Specwiel tanks to /xanthe1337
+# Specwiel tanks to /xanthe1337
