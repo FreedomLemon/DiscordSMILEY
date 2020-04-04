@@ -19,5 +19,5 @@ while True:
 
         if _data.status_code == 204:
             print(f"[{Fore.CYAN} Sent a new message {Fore.RESET}]")
-    except KeyboardInterrupt:
+    except:
         sys.exit(0)
