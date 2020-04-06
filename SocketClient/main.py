@@ -3,7 +3,7 @@ import websockets, asyncio, json, threading
 from colorama import Fore, init
 init(convert=True)
 
-token = 'TOKEN'
+token = ''
 
 class Client:
     def __init__(self, token: str):
@@ -26,14 +26,7 @@ class Client:
 
     async def connect(self):
         self.socket = await websockets.connect("wss://gateway.discord.gg/?encoding=json&v=6")
-
         self.heartbeat = json.loads((await self.socket.recv()))['d']['heartbeat_interval']
-
-    async def resume(self):
-        if self.socket == None:
-            await self.identify()
-        
-        await self.send(json.dumps({'op': 0, 'd': {"session_id": self.sessionID}}))
 
     async def identify(self):
         if self.socket == None:
@@ -67,8 +60,8 @@ class Client:
             await self.identify()
 
         while True:
-            _data = json.loads(await self.socket.recv())
-            self.seq = _data['s']
+            _data = (await self.socket.recv())
+            self.seq = json.loads(_data)['s']
             print( Fore.CYAN + _data + "\n")
 
 asyncio.run(Client(token).messages())
